@@ -1,0 +1,31 @@
+[project]
+name = "ha-samsung-find"
+version = "0.1.0"
+description = "Home Assistant Samsung Find custom integration"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+
+[project.optional-dependencies]
+test = [
+  "mypy==1.19.1",
+  "pytest==8.4.2",
+  "pytest-asyncio==1.2.0",
+  "pytest-homeassistant-custom-component==0.13.289",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unreachable = true
+pretty = true
+show_error_codes = true
+namespace_packages = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"

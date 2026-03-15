@@ -1,0 +1,8 @@
+ring_device:
+  name: Ring device
+  description: Trigger Samsung Find to ring the selected Samsung phone.
+  target:
+    device:
+      integration: samsung_find
+    entity:
+      integration: samsung_find

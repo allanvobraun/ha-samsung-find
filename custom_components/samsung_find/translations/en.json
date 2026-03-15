@@ -1,0 +1,56 @@
+{
+  "title": "Samsung Find",
+  "config": {
+    "step": {
+      "finish": {
+        "title": "Authentication failed",
+        "description": "Samsung Find login could not be completed. Try again."
+      },
+      "reauth_confirm": {
+        "title": "Reconnect Samsung Find",
+        "description": "Samsung Find needs a fresh Samsung login."
+      },
+      "select_device": {
+        "title": "Select device",
+        "description": "Choose the Samsung phone that Home Assistant should ring."
+      },
+      "user": {
+        "title": "Connect Samsung Find",
+        "description": "Start Samsung QR login."
+      }
+    },
+    "progress": {
+      "task_stage_one": "Preparing Samsung QR login...",
+      "task_stage_two": "Scan the QR code with your Samsung account.\n![QR code](data:image/png;base64,${qr_code})\n\nIf the image does not render, open ${url}\n\nCode: `${code}`"
+    },
+    "error": {
+      "auth": "Samsung authentication failed.",
+      "login_timeout": "Samsung QR login timed out.",
+      "no_devices": "No supported Samsung Find devices were returned for this account.",
+      "reauth_required": "The Samsung session expired. Reauthenticate the integration.",
+      "unknown": "An unexpected Samsung Find error occurred.",
+      "validation": "Samsung returned data in an unexpected format."
+    },
+    "abort": {
+      "reauth_successful": "Samsung Find was reconnected."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Samsung Find options",
+        "description": "Choose the Samsung phone to control with this config entry."
+      }
+    },
+    "error": {
+      "no_devices": "No supported Samsung Find devices were returned for this account.",
+      "reauth_required": "The Samsung session expired. Reauthenticate the integration."
+    }
+  },
+  "services": {
+    "ring_device": {
+      "name": "Ring device",
+      "description": "Trigger Samsung Find to ring the selected phone."
+    }
+  }
+}

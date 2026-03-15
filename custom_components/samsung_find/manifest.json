@@ -1,0 +1,14 @@
+{
+  "domain": "samsung_find",
+  "name": "Samsung Find",
+  "after_dependencies": ["http"],
+  "version": "0.1.0",
+  "documentation": "https://github.com/allanbraun/ha-samsung-find",
+  "issue_tracker": "https://github.com/allanbraun/ha-samsung-find/issues",
+  "integration_type": "hub",
+  "dependencies": [],
+  "codeowners": ["@allanbraun"],
+  "requirements": ["pydantic>=2.10.6", "qrcode>=8.0"],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}
