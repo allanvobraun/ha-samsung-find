@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from typing import Any
 
 import voluptuous as vol
@@ -18,6 +19,8 @@ from .exceptions import (
     SamsungFindValidationError,
 )
 from .helpers import generate_qr_code_base64, get_entry_config
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class SamsungFindConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -42,9 +45,14 @@ class SamsungFindConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 self._client = SamsungFindApiClient(self.hass)
             self._stage_one_result = await self._client.async_start_qr_login()
         except SamsungFindValidationError:
+            _LOGGER.exception("Samsung Find QR login stage one returned unexpected data")
             self._flow_error = "validation"
         except SamsungFindError:
+            _LOGGER.exception("Samsung Find QR login stage one failed")
             self._flow_error = "auth"
+        except Exception:
+            _LOGGER.exception("Unexpected error during Samsung Find QR login stage one")
+            self._flow_error = "unknown"
 
     async def _async_stage_two(self) -> None:
         try:
@@ -53,13 +61,20 @@ class SamsungFindConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self._client.set_session(self._session_data)
             self._available_devices = await self._client.async_list_devices()
         except SamsungFindLoginTimeout:
+            _LOGGER.warning("Samsung Find QR login timed out before approval completed")
             self._flow_error = "login_timeout"
         except SamsungFindValidationError:
+            _LOGGER.exception("Samsung Find QR login stage two returned unexpected data")
             self._flow_error = "validation"
         except SamsungFindAuthError:
+            _LOGGER.exception("Samsung Find session was rejected immediately after login")
             self._flow_error = "reauth_required"
         except SamsungFindError:
+            _LOGGER.exception("Samsung Find QR login stage two failed")
             self._flow_error = "auth"
+        except Exception:
+            _LOGGER.exception("Unexpected error during Samsung Find QR login stage two")
+            self._flow_error = "unknown"
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         if self._stage_one_task is None:
